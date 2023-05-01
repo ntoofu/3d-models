@@ -3,15 +3,17 @@ include <BOSL2/std.scad>
 
 n = 2;
 t = 2.0;
-pocket_d = 7.0;
+pocket_d = 7.5;
 hook_d = 3.5;
-height = 52.0;
+/* height = 52.0; */
 depth = 20.0;
 beam_dist = 44.0;
 
+height = beam_dist+hook_d+2*t;
 pocket_w = pocket_d + 2 * t;
 w = pocket_w * n;
 
+EPSILON=0.01;
 
 module hook() {
     union() {
@@ -36,8 +38,10 @@ module holder() {
 union() {
     cuboid([w, height, t], anchor=BOTTOM+BACK);
     move(z=EPSILON) hook();
-    move(y=-beam_dist, z=EPSILON) hook();
+    /* move(y=-beam_dist, z=EPSILON) hook(); */
+    move(y=-beam_dist, z=EPSILON) cuboid([w, t, hook_d+EPSILON], anchor=TOP+BACK);
+    move(y=-beam_dist-hook_d-t, z=EPSILON) cuboid([w, t, hook_d+EPSILON], anchor=TOP+BACK);
     for(i=[-(n-1):2:(n-1)]) {
-        move([pocket_w / 2 * i,-height,t-EPSILON]) holder();
+        move([pocket_w / 2 * i,-0.6*height,t-EPSILON]) holder();
     }
 }
