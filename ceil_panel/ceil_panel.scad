@@ -1,5 +1,7 @@
 include <BOSL2/std.scad>
 
+$fn = 64;
+
 t = 2.0;
 d = 99.0;
 _ = 0.1;

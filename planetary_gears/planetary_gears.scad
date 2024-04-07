@@ -22,6 +22,7 @@ n2 = 3;
 pitch = 5;
 
 height_offset = 15;
+hole_distance = 15;
 
 module hex_pillar(d, l) {
     move(z=-l/2) rotate([0, -90, 0])
@@ -48,9 +49,12 @@ module outer_gear(z) {
             difference() {
                 intersection() {
                     union() {
-                        cuboid([(r+t)*2, shaft_d*3, t], anchor=TOP);
-                        rotate([0, 0, 60]) cuboid([(r+t)*2, shaft_d*3, t], anchor=TOP);
-                        rotate([0, 0, 120]) cuboid([(r+t)*2, shaft_d*3, t], anchor=TOP);
+                        for(a=[0:60:360-_]) {
+                            rotate([0, 0, a]) difference() {
+                                cuboid([r+t, shaft_d*3, t], anchor=TOP+LEFT);
+                                move(x=hole_distance, z=_) cyl(d=shaft_d+gap_fixed, h=t+2*_, anchor=TOP);
+                            }
+                        }
                     }
                     cyl(r=r+t, h=t, anchor=TOP);
                 }
@@ -125,10 +129,10 @@ module assembled() {
 
 /* sun_gear(); */
 /* planetary_gear(z_p1); */
-planetary_gear(z_p2);
+/* planetary_gear(z_p2); */
 /* carrier(r_sun, r_p1, n1, r_p2, n2); */
 /* union() { */
 /*     outer_gear_leg(z_o1); */
 /*     outer_gear(z_o1); */
 /* } */
-/* outer_gear(z_o2); */
+outer_gear(z_o2);

@@ -5,7 +5,8 @@ t = 10;
 d = 35;
 h = 100;
 hole_r = 10;
-arm_r = 25;
+arm_r = 40;
+arm_pos = 50;
 $fn=64;
 
 union() {
@@ -19,7 +20,7 @@ union() {
         move(y = -(h + hole_r + t / 2)) rotate([0, 90, 0]) torus(r_maj = hole_r + t / 2, r_min = t / 2);
 
         for(i = [-1, 1]) {
-            move(y = -d / 2) rotate([90 * i, 0, -90]) {
+            move(y = arm_r - arm_pos) rotate([90 * i, 0, -90]) {
                 intersection() {
                     torus(r_maj = arm_r + t / 2, r_min = t / 2);
                     pie_slice(ang = 60, d = 2 * (arm_r + t), h = t, anchor = CENTER);
