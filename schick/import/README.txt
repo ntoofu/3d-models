@@ -1,0 +1,1 @@
+Flamingo Razor to Schick Hydro Silk Razor Adaptor by oldfartt on Thingiverse: https://www.thingiverse.com/thing:4896427
