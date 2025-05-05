@@ -2,17 +2,23 @@ include <BOSL2/std.scad>
 include <BOSL2/rounding.scad>
 include <./name.scad>
 
-res = 25;
-l = 2.5;
-delta_max = 1;
+res = 50;
+l = 10.0;
+delta_max = 6.5;
 t = name;
 font = "MigMix 2P:style=Bold";
-size = 10;
-spacing = 2;
+size = 8;
+spacing = 1.0;
+base_d = 7.0;
 
-zflip() union() {
-    for(i=[0:res]) {
-        move([0, 0, l*i/res]) #linear_extrude(l/res) offset(delta=delta_max*i/res) text(text=t, font=font, size=size);
+width = 70.0;
+
+intersection() {
+    union() {
+        for(i=[0:res]) {
+            move([0, 0, l*i/res]) linear_extrude(l/res) offset(delta=delta_max*i/res) text(text=t, font=font, size=size);
+        }
     }
-    move([-delta_max-spacing, -delta_max-spacing, l]) cuboid([93, size+2*delta_max+2*spacing, 5], anchor=BOTTOM+LEFT+FRONT);
+    move([-spacing, -spacing, 0]) cuboid([width+2*spacing, size+2*spacing, l], anchor=BOTTOM+LEFT+FRONT);
 }
+move([-spacing, -spacing, l]) cuboid([width+2*spacing, size+2*spacing, base_d], anchor=BOTTOM+LEFT+FRONT);
