@@ -16,7 +16,7 @@ module hex_pillar(id, h) {
 
 difference() {
     mount(width=hanger_hole_w+2*hanger_hole_t, front_t=front_t);
-    move([-hanger_hole_t, -hanger_hole_t, 0]) cuboid([hanger_hole_t, mount_h()-hanger_hole_t+_, hanger_hole_w], anchor=RIGHT+BACK, chamfer=chamfer, edges=[TOP+RIGHT, TOP+LEFT, BOTTOM+RIGHT, BOTTOM+LEFT]);
+    move([-hanger_hole_t/2, -hanger_hole_t, 0]) cuboid([hanger_hole_t, mount_h()-hanger_hole_t+_, hanger_hole_w+2*hanger_hole_t], anchor=RIGHT+BACK, chamfer=-chamfer);
     move([-hanger_hole_t/2+_, -mount_h()*0.5, 0]) rotate([0, 90, 0]) hex_pillar(head_d, h=hanger_hole_t+_);
     move([-5+_, -mount_h()*0.5, 0]) rotate([0, 90, 0]) hex_pillar(tapping_d, h=10);
 }
