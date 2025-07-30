@@ -15,11 +15,10 @@ brush_holder_id_min = 9.5;
 brush_holder_h = 10.0;
 brush_holder_top_z = 40.0;
 brush_holder_t = 1.0;
-handle_holder_d1 = 9.0 - 0.1;
-handle_holder_d2 = shaft_od - 0.1;
-handle_holder_l1 = 3.5;
-handle_holder_l2 = 5.5;
-handle_holder_offset = handle_holder_d2 * sqrt(3) / 4;
+handle_d = 6.0;
+handle_holder_w1 = 24.0;
+handle_holder_w2 = handle_d + 0.1;
+handle_holder_t = 3.0;
 chamfer = 0.5;
 _ = 0.1;
 
@@ -58,8 +57,16 @@ module brush_holder() {
 }
 
 module handle_holder() {
-	top_half(z=-ceil_t) move([-cap_od/2+wall_t, 0, -ceil_t+handle_holder_offset]) rotate([0,-90,0]) cyl(d=handle_holder_d1, l=handle_holder_l1+wall_t, chamfer1=-(chamfer+wall_t), chamfer2=chamfer, anchor=BOTTOM);
-	top_half(z=-ceil_t) move([-cap_od/2-handle_holder_l1, 0, -ceil_t+handle_holder_offset]) rotate([90,0,-90]) cyl(d=handle_holder_d2, l=handle_holder_l2, $fn=6, chamfer1=-chamfer, chamfer2=chamfer, anchor=BOTTOM);
+	difference() {
+		union() {
+			move([-cap_od/2+wall_t, 0, -ceil_t]) cuboid([handle_holder_w1 - handle_holder_w2 / 2, handle_holder_w2 + handle_holder_t * 2, cap_h], chamfer=chamfer, anchor=BOTTOM+RIGHT);
+			move([-cap_od/2+wall_t-handle_holder_w1+handle_holder_w2/2, 0, -ceil_t]) cyl(d=handle_holder_w2+handle_holder_t*2, h=cap_h, chamfer=chamfer, anchor=BOTTOM);
+		}
+		move([-cap_od/2+wall_t, 0, -ceil_t]) cuboid([handle_holder_w1 - handle_holder_w2 / 2, handle_holder_w2, cap_h], chamfer=-chamfer, anchor=BOTTOM+RIGHT);
+		move([-cap_od/2+wall_t-handle_holder_w1+handle_holder_w2/2, 0, -ceil_t]) cyl(d=handle_holder_w2, h=cap_h, chamfer=-chamfer, anchor=BOTTOM);
+		move([-cap_od/2+wall_t, -handle_holder_w2/2, -ceil_t]) cuboid([handle_d * 2, handle_holder_t, cap_h], chamfer=-chamfer, anchor=BOTTOM+RIGHT+BACK);
+
+	}
 }
 
 union() {
