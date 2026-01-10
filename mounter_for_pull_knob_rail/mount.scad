@@ -7,7 +7,7 @@ bottom_trench_w = 5.8;
 bottom_trench_h = 1.7;
 bottom_slope_rate = 0.30;
 bottom_front_wall = 3.0;
-h = 18.2;
+h = 18.0;  // 18.2
 back_t = 3.0;
 
 chamfer = 0.5;

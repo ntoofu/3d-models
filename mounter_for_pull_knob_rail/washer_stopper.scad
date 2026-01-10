@@ -4,7 +4,7 @@ use <mount.scad>
 w = 15.0;
 front_t = 5.0;
 mounter_top_to_trench = 24.2;
-mounter_top_to_bottom = 28.9;
+mounter_top_to_bottom = mount_h();
 stopper_y1 = -(47.3 + mounter_top_to_trench + 0.5);
 stopper_t = 2.0;
 stopper_w = 6.0;
