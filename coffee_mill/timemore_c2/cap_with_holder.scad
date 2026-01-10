@@ -19,6 +19,11 @@ handle_d = 6.0;
 handle_holder_w1 = 24.0;
 handle_holder_w2 = handle_d + 0.1;
 handle_holder_t = 3.0;
+handle_axis_d = 18.2;
+orig_handle_axis_h1 = 1.9;
+orig_handle_axis_h2 = 10.0;
+extender_d = 35.0;
+extender_h = 15.0;
 chamfer = 0.5;
 _ = 0.1;
 
@@ -64,15 +69,26 @@ module handle_holder() {
 		}
 		move([-cap_od/2+wall_t, 0, -ceil_t]) cuboid([handle_holder_w1 - handle_holder_w2 / 2, handle_holder_w2, cap_h], chamfer=-chamfer, anchor=BOTTOM+RIGHT);
 		move([-cap_od/2+wall_t-handle_holder_w1+handle_holder_w2/2, 0, -ceil_t]) cyl(d=handle_holder_w2, h=cap_h, chamfer=-chamfer, anchor=BOTTOM);
-		move([-cap_od/2+wall_t, -handle_holder_w2/2, -ceil_t]) cuboid([handle_d * 2, handle_holder_t, cap_h], chamfer=-chamfer, anchor=BOTTOM+RIGHT+BACK);
+		move([-cap_od/2+wall_t, -handle_holder_w2/2, -ceil_t]) cuboid([handle_d * 1.2, handle_holder_t, cap_h], chamfer=-chamfer, anchor=BOTTOM+RIGHT+BACK);
 
 	}
 }
 
+module orig_cap_extender() {
+	difference() {
+		cyl(d=extender_d, h=extender_h, chamfer=chamfer, anchor=BOTTOM, $fn=64);
+		cyl(d=handle_axis_d, h=extender_h, chamfer2=-chamfer, anchor=BOTTOM, $fn=64);
+		move([0, 0, cap_id/2+orig_handle_axis_h2]) rot([0, 90, 0]) cyl(d=cap_id, h=extender_d, $fn=128);
+		move([0, 0, orig_handle_axis_h1]) cuboid([extender_d/2, handle_d, extender_h], anchor=LEFT+BOTTOM);
+	}
+}
+
+/*
 union() {
 	cap();
 	brush_holder();
 	handle_holder();
 }
+*/
 
-
+orig_cap_extender();
