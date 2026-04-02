@@ -16,5 +16,6 @@
         }
     },
     "containerUser": "vscode",
-    "remoteUser": "vscode"
+    "remoteUser": "vscode",
+    "postStartCommand": "/usr/local/share/desktop-init.sh"
 }
