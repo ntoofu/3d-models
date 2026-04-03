@@ -1,21 +1,13 @@
 {
     "name": "OpenSCAD & Cura",
     "build": { "dockerfile": "Dockerfile" },
-    "features": {
-        "ghcr.io/devcontainers/features/desktop-lite:1": {
-            "version": "latest",
-            "password": "vscode",
-            "webPort": "6080"
-        }
-    },
-    "forwardPorts": [6080],
-    "portsAttributes": {
-        "6080": {
-            "label": "VNC Desktop",
-            "onAutoForward": "silent"
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "thijsdaniels.vscode-openscad-preview"
+            ]
         }
     },
     "containerUser": "vscode",
-    "remoteUser": "vscode",
-    "postStartCommand": "/usr/local/share/desktop-init.sh"
+    "remoteUser": "vscode"
 }
