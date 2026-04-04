@@ -1,0 +1,13 @@
+The files fdmprinter.def.json, fdmextruder.def.json, creality_base.def.json,
+creality_ender3.def.json, and creality_base_extruder_0.def.json are part of the
+Ultimaker Cura project and are licensed under the GNU Lesser General Public
+License v3.0 (LGPL-3.0).
+
+Source: https://github.com/Ultimaker/Cura (tag: 5.12.0)
+Copyright: Ultimaker B.V. and contributors
+
+Full license text: https://www.gnu.org/licenses/lgpl-3.0.txt
+
+---
+
+custom.def.json is original work and not subject to the above license.
