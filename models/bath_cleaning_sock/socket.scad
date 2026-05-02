@@ -5,21 +5,21 @@ inner_oring_id = 60.0;
 inner_oring_t = 3.0;
 outer_oring_id = 80.0;
 outer_oring_t = 3.0;
-outer_oring_curve_r = 1000;
+outer_oring_curve_r = 800;
 hose_od = 19.0;
 hose_hole_l = 10.0;
-hose_hole_d_diff_max = 1.0;
-hose_hole_d_diff_min = -0.3;
+hose_hole_d_diff_max = 0.7;
+hose_hole_d_diff_min = -0.6;
 hose_hole_pos_angle = 120;
 overhang_ratio = 0.8;
 outer_d = outer_oring_id + outer_oring_t + t;
-bath_inlet_t = 10.7;
+bath_inlet_t = 11.0;
 bath_inlet_d = 70.0;
 latch_w = 2.0;
 latch_h = 1.5;
 latch_pos = [15, 55, 154]/219*360;
 latch_base_h = (outer_oring_id+outer_oring_t-t-bath_inlet_d)/2;
-latch_gap = 6.0;
+latch_gap = 7.0;
 space_filler_angle = 15;
 outer_shell_bottom_h = outer_oring_t * 1.5;
 inner_shell_bottom_h = inner_oring_t;
@@ -73,7 +73,7 @@ module oring_holder2(id, t, w, h, curve_r=0, ratio=2/3) {
 module wall_latch() {
     s = 1.0;
     rotate([90, 0, 0])
-        prismoid(size1=[latch_w, latch_w + latch_base_h * s], size2=[latch_w, latch_w - latch_h * s], h=latch_base_h+latch_h, shift=[0, (latch_h + latch_base_h) * s/2], anchor=BACK+BOTTOM);
+        prismoid(size1=[latch_w*3, latch_w + latch_base_h * s], size2=[latch_w, latch_w - latch_h * s], h=latch_base_h+latch_h, shift=[0, (latch_h + latch_base_h) * s/2], anchor=BACK+BOTTOM);
 }
 
 module hole_shape(l, d_loose, d_tight, n) {
