@@ -2,7 +2,13 @@ FROM mcr.microsoft.com/devcontainers/base:ubuntu AS prusaslicer-builder
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     cmake ninja-build build-essential git \
-    m4 pkg-config python3
+    m4 pkg-config python3 locales
+
+# Set UTF-8 locale
+RUN locale-gen en_US.UTF-8
+ENV LANG=en_US.UTF-8 \
+    LANGUAGE=en_US:en \
+    LC_ALL=en_US.UTF-8
 
 WORKDIR /tmp
 RUN git clone --depth 1 --branch version_2.9.4 \
