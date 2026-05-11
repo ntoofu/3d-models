@@ -1,47 +1,47 @@
 # Printer Profiles
 
-CuraEngine 用のプリンタープロファイル定義ファイル
+PrusaSlicer 用のプロファイル定義ファイル
 
 ## ファイル構成
 
 | ファイル | 役割 |
 |---|---|
-| `fdmprinter.def.json` | 全設定のルート定義（Cura 共通） |
-| `fdmextruder.def.json` | エクストルーダー定義（Cura 共通） |
-| `creality_base.def.json` | Creality プリンター共通設定 |
-| `creality_base_extruder_0.def.json` | Creality 共通エクストルーダー定義 |
-| `creality_ender3.def.json` | Ender-3 ベースプロファイル（V2 も同一仕様） |
-| `custom.def.json` | **カスタム設定（編集対象はここのみ）** |
+| `printer.ini` | プリンター・造形設定（Ender-3 V2 共通） |
+| `filament_pla.ini` | PLA フィラメント設定 |
+| `filament_petg.ini` | PETG フィラメント設定 |
 
-継承チェーン:
-```
-fdmprinter.def.json
-  └─ creality_base.def.json (→ creality_base_extruder_0.def.json を参照)
-       └─ creality_ender3.def.json
-            └─ custom.def.json
-```
-
-ベンダーファイルは Cura **5.12.0** から取得。LGPL-3.0 ライセンス（詳細は LICENSE 参照）。
-
-### 注意
-
-CuraEngine 5.x は Ubuntu 24.04 の apt リポジトリに存在しない。
-Dockerfile ではビルド時に Cura AppImage（~335MB）から取得しているので、
-バージョンアップ時はプロファイルと AppImage のバージョンを合わせること。
+スライス時にプリンター設定の上にフィラメント設定を重ねてロードする。
+未記載の設定は PrusaSlicer のデフォルト値が使われる。
 
 ## 使用方法
 
-* 通常はmakeにて実行するため意識する必要はない
-* CuraEngineを直接呼び出すときはプロファイルを以下の用に指定
-  * `-l model.stl` でSTLファイル指定
-  * `-o model.gcode` で出力G-codeファイル名指定
-  * `-s support_enable=true` はオーバーライドする設定を指定(optional)
+通常は `make` を使う。
 
 ```bash
-CuraEngine slice -j profiles/custom.def.json -l model.stl -o model.gcode -s support_enable=true
+make MODEL=path/to/model.stl slice               # PLA（デフォルト）
+make MODEL=path/to/model.stl FILAMENT=petg slice  # PETG
+make MODEL=path/to/model.stl slice-support        # サポート材あり
 ```
 
-## カスタム設定の変更
+直接 PrusaSlicer を呼ぶ場合:
 
-* `custom.def.json` の `overrides` セクションを編集する
-* 設定キー名は `fdmprinter.def.json` 内を検索すればOK
+```bash
+prusa-slicer --export-gcode \
+    --load profiles/printer.ini \
+    --load profiles/filament_pla.ini \
+    --output model.gcode model.stl
+```
+
+## フィラメントの追加
+
+`filament_<name>.ini` を作成して `make FILAMENT=<name> slice` で使用できる。
+設定キーの確認は以下で:
+
+```bash
+prusa-slicer --save /tmp/full-config.ini
+```
+
+## バージョン管理
+
+Dockerfile に記載の PrusaSlicer バージョンに合わせること。
+最新リリースは https://github.com/prusa3d/PrusaSlicer/releases を参照。

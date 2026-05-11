@@ -1,6 +1,6 @@
 {
-    "name": "OpenSCAD & Cura",
-    "build": { "dockerfile": "Dockerfile" },
+    "name": "OpenSCAD & PrusaSlicer",
+    "image": "ghcr.io/ntoofu/3d-models:devcontainer",
     "customizations": {
         "vscode": {
             "extensions": [
