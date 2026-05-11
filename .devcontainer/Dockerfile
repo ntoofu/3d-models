@@ -3,7 +3,8 @@ FROM mcr.microsoft.com/devcontainers/base:ubuntu AS prusaslicer-builder
 RUN apt-get update && apt-get install -y --no-install-recommends \
     cmake ninja-build build-essential git \
     m4 pkg-config python3 locales \
-    libgl1-mesa-dev libxmu-dev libxi-dev
+    libgl1-mesa-dev libxmu-dev libxi-dev \
+    texinfo
 
 # Set UTF-8 locale
 RUN locale-gen en_US.UTF-8
