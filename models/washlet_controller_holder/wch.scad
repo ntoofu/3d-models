@@ -6,13 +6,13 @@ plate_t = 2.5;
 plate_t_min = 0.35;
 stapler_space_h = 10.0;
 stapler_space_w = 15.0;
-latch_dist = 184.5;
+latch_dist = 185.5;
 chamfer = 0.5;
 _ = 0.05;
 
 
 module latch() {
-    w1 = 8.0;
+    w1 = 7.0;
     w2 = 5.0;
     t = 2.5;
     arm_t = 2.5;
