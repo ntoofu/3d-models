@@ -11,6 +11,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     cmake ninja-build build-essential git \
     m4 pkg-config python3 locales \
     libgl1-mesa-dev libxmu-dev libxi-dev \
+    libdbus-1-dev libpng-dev \
     texinfo autoconf automake libtool
 
 # Set UTF-8 locale
@@ -42,7 +43,7 @@ RUN cmake -S PrusaSlicer -B PrusaSlicer/build -G Ninja \
     -DSLIC3R_GUI=OFF \
     -DSLIC3R_STATIC=1 \
     -DCMAKE_BUILD_TYPE=Release
-RUN cmake --build PrusaSlicer/build --target prusa_slicer -j${BUILD_JOBS}
+RUN cmake --build PrusaSlicer/build --target prusa-slicer -j${BUILD_JOBS}
 
 
 FROM mcr.microsoft.com/devcontainers/base:ubuntu
