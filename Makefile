@@ -4,16 +4,31 @@ PRINTER_PROFILE = profiles/printer.ini
 FILAMENT_PROFILE = profiles/filament_$(FILAMENT).ini
 
 # Usage:
-#   make MODEL=path/to/model.stl slice                    # PLA (default)
-#   make MODEL=path/to/model.stl FILAMENT=petg slice      # PETG
-#   make MODEL=path/to/model.stl slice-support            # with support
+#   make path/to/model.gcode slice            # PLA (default)
+#   make FILAMENT=petg path/to/model.gcode    # PETG
+#   make path/to/model.gcode+support          # with support
+#   make -B path/to/model.gcode+brim+support  # force re-slicing with brim & support
 
+FLAGS ?=
 MODEL ?= model.stl
 
-.PHONY: slice slice-support
+.PHONY:
+%+support: OPT_FLAGS+= --support-material
+%+support: %
+	@echo "Enable support material"
 
-slice:
-	prusa-slicer --export-gcode --load $(PRINTER_PROFILE) --load $(FILAMENT_PROFILE) --output $(MODEL:.stl=.gcode) $(MODEL)
+.PHONY:
+%+brim: OPT_FLAGS+= --load option_brim.ini
+%+brim: %
+	@echo "Enable brim"
 
-slice-support:
-	prusa-slicer --export-gcode --support-material --load $(PRINTER_PROFILE) --load $(FILAMENT_PROFILE) --output $(MODEL:.stl=-support.gcode) $(MODEL)
+.PHONY:
+%+skirt: OPT_FLAGS+= --load option_skirt.ini
+%+skirt: %
+	@echo "Enable skirt"
+
+%.stl: %.scad
+	openscad -o $@ $<
+
+%.gcode: %.stl
+	prusa-slicer --export-gcode --load $(PRINTER_PROFILE) --load $(FILAMENT_PROFILE) --output $@ $(OPT_FLAGS) $(FLAGS) $<
