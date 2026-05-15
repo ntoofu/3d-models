@@ -8,7 +8,7 @@ stapler_space_h = 10.0;
 stapler_space_w = 15.0;
 latch_dist = 185.5;
 chamfer = 0.5;
-_ = 0.05;
+_ = 0.1;
 
 
 module latch() {
@@ -34,7 +34,7 @@ difference() {
         move([0, -plate_h/2, plate_t_min])
             xcopies(n=2, l=plate_w-3*stapler_space_w)
                 cuboid([stapler_space_w, stapler_space_h, plate_t], chamfer=chamfer, edges=[BOTTOM+BACK, BOTTOM+LEFT, BOTTOM+RIGHT], anchor=FRONT+BOTTOM);
-    ycopies(l=plate_h) cuboid([plate_w * 0.6, plate_h * 0.6, plate_t], chamfer=chamfer, anchor=BOTTOM);
+    ycopies(l=plate_h) cuboid([plate_w * 0.6, plate_h * 0.6, plate_t], chamfer=-chamfer, anchor=BOTTOM);
 }
 
 xflip_copy()
