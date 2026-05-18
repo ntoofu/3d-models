@@ -30,5 +30,6 @@ MODEL ?= model.stl
 %.stl: %.scad
 	openscad -o $@ $<
 
+.SECONDARY:
 %.gcode: %.stl
 	prusa-slicer --export-gcode --load $(PRINTER_PROFILE) --load $(FILAMENT_PROFILE) --output $@ $(OPT_FLAGS) $(FLAGS) $<
