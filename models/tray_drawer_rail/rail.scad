@@ -13,7 +13,7 @@ top_opened_t = 1.5;
 tapping_d = 2.7;
 mount_l = 20.0;
 mount_w = 10.0;
-mount_pos_from_back = 90.0;
+mount_pos_from_back = 85.0;
 
 chamfer = 0.5;
 _ = 0.1;
@@ -24,7 +24,7 @@ module hex_pillar(id, h) {
         hexagon(id=id, realign=true);
 }
 
-
+xflip()
 difference() {
     union() {
         cuboid([rail_t + trench_d, trench_l + rail_end, rail_h1 + trench_w + rail_h2], chamfer=chamfer, anchor=RIGHT+FRONT+BOTTOM);
