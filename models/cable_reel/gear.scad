@@ -13,12 +13,9 @@ module gear(gear_h, gear_shaft_d, track_circle_d, track_center_dist, horn_pocket
             up(gear_t1)
                 difference() {
                     cyl(h=gear_t2, d=track_center_dist, anchor=BOTTOM, chamfer2=chamfer);
-                    up(horn_pocket_bottom_t) zrot_copies(n=6) union() {
-                        right(track_circle_d/2) cyl(h=horn_pocket_depth, d=track_center_dist-track_circle_d, anchor=BOTTOM);
-                        intersection() { 
-                            tube(id=track_circle_d, od=track_center_dist, h=horn_pocket_depth, anchor=BOTTOM);
-                            pie_slice(d=track_center_dist, ang=2*horn_gear_pocket_angle, spin=-horn_gear_pocket_angle, h=horn_pocket_depth, anchor=BOTTOM);
-                        }
+                    up(horn_pocket_bottom_t) zrot_copies(n=6) right(track_circle_d/2) union() {
+                        cyl(h=horn_pocket_depth, d=track_center_dist-track_circle_d, anchor=BOTTOM);
+                        cuboid([(track_center_dist-track_circle_d)/2, track_center_dist-track_circle_d, horn_pocket_depth], anchor=BOTTOM+LEFT);
                     }
                 }
         }
