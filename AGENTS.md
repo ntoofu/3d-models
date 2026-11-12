@@ -32,19 +32,9 @@ make models/<dir>/<name>.gcode
 # PETG 指定で G-code 生成
 make FILAMENT=petg models/<dir>/<name>.gcode
 
-# 強制再ビルド（-B）＋ サポート材有効
-make -B FILAMENT=petg models/<dir>/<name>.gcode+support
-```
-
-### Brim / Skirt オプション指定時の注意
-`Makefile` 内の `%+brim` / `%+skirt` ターゲットは `--load option_brim.ini`（`profiles/` プレフィックスなし）を参照しているため、そのまま実行するとパスエラーになります。Brim や Skirt を付ける場合は `FLAGS` で明示的に指定してください。
-
-```bash
-# PETG + 5mm Brim 付きで強制再スライス
-make -B FILAMENT=petg FLAGS="--load profiles/option_brim.ini" models/<dir>/<name>.gcode
-
-# PLA + Skirt 付きで強制再スライス
-make -B FILAMENT=pla FLAGS="--load profiles/option_skirt.ini" models/<dir>/<name>.gcode
+# オプション付き（brim / skirt / support は `+` で連結可、-B で強制再ビルド）
+make -B FILAMENT=petg models/<dir>/<name>.gcode+brim
+make -B FILAMENT=petg models/<dir>/<name>.gcode+brim+support
 ```
 
 ### 1つの `.scad` から複数パーツを出力する場合
@@ -52,7 +42,7 @@ make -B FILAMENT=pla FLAGS="--load profiles/option_skirt.ini" models/<dir>/<name
 
 ```bash
 openscad -D 'part="spine_plate"' -o models/shishiodoshi/spine_plate.stl models/shishiodoshi/shishiodoshi.scad
-make -B FILAMENT=petg FLAGS="--load profiles/option_brim.ini" models/shishiodoshi/spine_plate.gcode
+make -B FILAMENT=petg models/shishiodoshi/spine_plate.gcode+brim
 ```
 
 ### ビルド結果の確認

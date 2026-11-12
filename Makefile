@@ -18,12 +18,12 @@ MODEL ?= model.stl
 	@echo "Enable support material"
 
 .PHONY:
-%+brim: OPT_FLAGS+= --load option_brim.ini
+%+brim: OPT_FLAGS+= --load profiles/option_brim.ini
 %+brim: %
 	@echo "Enable brim"
 
 .PHONY:
-%+skirt: OPT_FLAGS+= --load option_skirt.ini
+%+skirt: OPT_FLAGS+= --load profiles/option_skirt.ini
 %+skirt: %
 	@echo "Enable skirt"
 
